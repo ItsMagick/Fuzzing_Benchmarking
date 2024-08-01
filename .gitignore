@@ -11,4 +11,5 @@ binaries/*
 *.pcap
 
 !**/.gitkeep
-out/
+out
+venv
