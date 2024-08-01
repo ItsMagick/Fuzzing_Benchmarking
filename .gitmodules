@@ -1,0 +1,9 @@
+[submodule "aflnet"]
+	path = aflnet
+	url = https://github.com/ItsMagick/aflnet.git
+[submodule "mosquitto_fuzz_benchmark"]
+	path = mosquitto_fuzz_benchmark
+	url = https://github.com/ItsMagick/pulsar.git
+[submodule "pulsar"]
+	path = pulsar
+	url = https://github.com/ItsMagick/pulsar.git

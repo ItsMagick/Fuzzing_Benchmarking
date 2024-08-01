@@ -1,0 +1,31 @@
+{
+  "state_aware": true,
+  "start_state": "CONNECTED",
+  "end_state": "DISCONNECTED",
+  "transitions": [
+    {
+      "from": "CONNECTED",
+      "to": "AUTHENTICATED",
+      "input": "CONNECT",
+      "output": "CONNACK"
+    },
+    {
+      "from": "AUTHENTICATED",
+      "to": "SUBSCRIBED",
+      "input": "SUBSCRIBE",
+      "output": "SUBACK"
+    },
+    {
+      "from": "SUBSCRIBED",
+      "to": "MESSAGE_RECEIVED",
+      "input": "PUBLISH",
+      "output": "PUBACK"
+    },
+    {
+      "from": "MESSAGE_RECEIVED",
+      "to": "DISCONNECTED",
+      "input": "DISCONNECT",
+      "output": "NONE"
+    }
+  ]
+}

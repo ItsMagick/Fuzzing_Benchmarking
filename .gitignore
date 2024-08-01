@@ -1,0 +1,14 @@
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+
+traffic/*
+binaries/*
+
+*.pcap
+
+!**/.gitkeep
+out/
