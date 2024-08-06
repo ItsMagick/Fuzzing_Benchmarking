@@ -20,7 +20,7 @@ The bytes are structured as follows:
     2nd Byte:         No idea
     3rd & 4th Byte:   filled with 0x00, might be padding to fill a specified frame in the protocol
     5th Byte:         The length of the command in bytes
-    6th - n-th Byte:  Semester Clubkarte: 1€The payload of the command (some of which are hardcoded and some are variable)
+    6th - n-th Byte:  The payload of the command (some of which are hardcoded and some are variable)
                         Note: The Payload has to be the same length as the length given in the 5th Byte 
                               but can also be 0 (no Byte)
     last Byte:        The checksum of the command that consists of the sum of all Bytes 
