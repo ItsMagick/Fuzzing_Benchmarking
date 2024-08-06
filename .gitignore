@@ -13,3 +13,4 @@ binaries/*
 !**/.gitkeep
 out
 venv
+aflnet_in
