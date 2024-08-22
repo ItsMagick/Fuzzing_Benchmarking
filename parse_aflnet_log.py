@@ -31,3 +31,9 @@ for i, chunk in enumerate(chunks):
 print(f"Total connections: {total_connections}")
 print(f"Successful connections: {successful_connections_count}")
 print(f"Unsuccessful connections: {faulty_connections_count}")
+
+# TODO: Das skript wurde geschrieben um die Anzahl der Fehlerhaften und Erfolgreichen Verbindungen zu zählen um sie
+#  abhängig von timestamps zu analysieren.
+#  Behauptung: AFLNets fehlerrate sinkt mit der Zeit
+#  Statistik machen wie effizient/WAHRSCHEINLICH es ist, dass die Mutation des Inputs zu einem (nutzlosen) Fehler führt
+#  -> Wie effizient ist AFLNets Erkennung von Wichtigen Bits/bytes?
