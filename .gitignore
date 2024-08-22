@@ -14,3 +14,4 @@ binaries/*
 out
 venv
 aflnet_in
+dump
