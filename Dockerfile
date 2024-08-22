@@ -60,6 +60,12 @@ ADD --keep-git-dir=true https://github.com/ItsMagick/mosquitto_fuzz_benchmark.gi
 # Set working directory
 WORKDIR /opt/mosquitto_fuzz_benchmark
 
+# Set environment variables
+ENV CFLAGS="-g -O0 -fsanitize=address -fno-omit-frame-pointer"
+ENV LD_FLAGS="-g -O0 -fsanitize=address -fno-omit-frame-pointer"
+ENV CC="/opt/aflnet/afl-clang-fast"
+ENV AFL_USE_ASAN=1
+
 # Build Mosquitto
 RUN make clean all WITH_TLS=no WITH_TLS_PSK:=no WITH_STATIC_LIBRARIES=yes WITH_DOCS=no WITH_CJSON=no WITH_EPOLL:=no
 RUN cp src/mosquitto /usr/local/bin/mosquitto
