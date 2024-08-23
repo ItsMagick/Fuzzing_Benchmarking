@@ -1,14 +1,14 @@
 import re
+import os
 
 total_connections = 0
 successful_connections_count = 0
 faulty_connections_count = 0
 
-log_file = "mqtt_output.log"
-faulty_connection_pattern = r'Client <unknown> disconnected due to protocol error'
+log_file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "mqtt_output.log")
 successful_connection_pattern = r'New client connected from'
 
-with open(log_file, 'r') as file:
+with open(log_file_path, 'r') as file:
     log_data = file.read()
 
 chunks = log_data.split("mosquitto version 2.0.18 starting")

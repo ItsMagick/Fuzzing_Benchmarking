@@ -8,7 +8,7 @@ MQTT_UNSUBSCRIBE = 0xA2
 MQTT_PINGREQ = 0xC0
 MQTT_DISCONNECT = 0xE0
 
-output_dir = "./aflnet_in"
+output_dir = "../aflnet_in"
 
 
 def create_directory(directory):
