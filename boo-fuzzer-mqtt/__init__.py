@@ -41,7 +41,6 @@ def monitor_broker(broker_process):
     Keep the Mosquitto broker running, restarting it if it terminates.
     """
     while True:
-        # Check if the broker process has terminated
         if broker_process.poll() is not None:
             print("Broker process terminated. Restarting...")
             broker_process = start_mosquitto_broker()
@@ -56,7 +55,6 @@ if __name__ == '__main__':
         monitor_thread = threading.Thread(target=monitor_broker, args=(broker_proc,), daemon=True)
         monitor_thread.start()
         helpers.init_structure(session)
-        # Start the fuzzing session
         session.fuzz()
     except KeyboardInterrupt:
         print("KeyboardInterrupt received. Shutting down and terminating procs...")
