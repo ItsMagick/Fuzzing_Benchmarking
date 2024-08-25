@@ -77,3 +77,4 @@ FROM scratch AS binaries
 COPY --from=mosquitto /usr/local/bin/mosquitto mosquitto
 COPY --from=mosquitto /opt/aflnet/afl-fuzz afl-fuzz
 COPY --from=mosquitto /opt/aflnet/afl-showmap afl-showmap
+COPY --from=mosquitto /opt/aflnet/afl-plot afl-plot

@@ -1,8 +1,8 @@
 #!/bin/bash
 set -ex
 
-TRAFFIC_OUTPUT_DIR=./traffic
-AFL_OUTPUT_DIR=./out
+TRAFFIC_OUTPUT_DIR=../traffic
+AFL_OUTPUT_DIR=../out
 DURATION=60
 PROCESS_PATTERN="afl-fuzz"
 

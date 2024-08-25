@@ -2,7 +2,7 @@
 set -ex
 
 INTERFACE=lo
-TRAFFIC_OUTPUT_DIR=./traffic
+TRAFFIC_OUTPUT_DIR=../traffic
 DURATION=900
 PROCESS_PATTERN="mosquitto"
 mkdir -p $TRAFFIC_OUTPUT_DIR
