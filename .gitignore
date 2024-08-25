@@ -11,7 +11,7 @@ binaries/*
 *.pcap
 
 !**/.gitkeep
-out
+out2
 venv
 aflnet_in
 dump
