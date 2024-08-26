@@ -19,3 +19,4 @@ mqtt_aflnet_stdout.log
 *.so
 __pycache__
 boo-fuzzer-mqtt/boofuzz-results
+*.log
