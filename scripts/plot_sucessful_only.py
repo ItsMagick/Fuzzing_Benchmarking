@@ -104,6 +104,7 @@ def plot_connections(cumulative_success, cumulative_unsuccessful, total_connecti
 
     # Adjust layout to make space for text
     plt.subplots_adjust(bottom=0.3)  # Increase bottom margin to accommodate text
+    plt.show()
     plt.savefig('plots/connection_evaluation_aflnet.png', bbox_inches='tight')
     plt.close(fig)
 
