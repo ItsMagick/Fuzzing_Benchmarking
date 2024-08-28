@@ -16,8 +16,10 @@ echo "run -p $MOSQUITTO_PORT" >> $GDB_SCRIPT
 for testcase in $TESTCASE_DIR/*; do
     echo "Running testcase: $testcase" | tee -a $LOG_FILE
     gnome-terminal -- bash -c "gdb -q $MOSQUITTO_BINARY -x $GDB_SCRIPT; exec bash"
-    wait
     $AFLNET_REPLAY_BINARY "$testcase" MQTT $MOSQUITTO_PORT
+
+    echo "Waiting for gdb to be closed manually until next testcase..."
+    read -p "Press [Enter] when the gdb session is closed and you are ready to continue."
     echo "Testcase completed: $testcase"
     echo "---------------------------------"
 done
