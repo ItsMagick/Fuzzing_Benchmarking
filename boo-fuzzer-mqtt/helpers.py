@@ -7,9 +7,7 @@ def init_request_structure(session):
     :param session:
     :return:
     """
-    # Initialize the request structure
     request = session.connect("mqtt", request_template="mqtt")
-    # Add the request structure
     request.add_header(name="header", value=b"\x10", fuzzable=False)
     request.add_header(name="length", value=b"\x00", fuzzable=True)
     request.add_header(name="client_id", value=b"\x00", fuzzable=True)

@@ -1,7 +1,10 @@
+import os
 import socket
 import subprocess
 import threading
 import time
+
+import psutil
 
 import helpers
 from boofuzz import Session, Target, TCPSocketConnection
@@ -15,6 +18,7 @@ def init_connection():
     """
     broker_proc = start_mosquitto_broker()
 
+    wait_for_ready_signal()
     ip = '127.0.0.1'
     mqtt_port = 1883
     ProcessMonitor(host=ip, port=mqtt_port)
@@ -29,11 +33,66 @@ def init_connection():
     raise Exception("No connection could be established to any IP")
 
 
+def wait_for_ready_signal():
+    """
+    Wait for the Mosquitto broker to signal that it is ready.
+    """
+    ready_file = 'mosquitto_ready.signal'
+    while not os.path.exists(ready_file):
+        print("Waiting for Mosquitto broker to be ready...")
+        time.sleep(1)  # Check every second
+
+    print("Mosquitto broker is ready.")
+
+
 def start_mosquitto_broker():
     """
     Starts the Mosquitto broker.
     """
-    return subprocess.Popen(['../binaries/mosquitto'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    terminal_command = [
+        'gnome-terminal',
+        '--',
+        'bash', '-c',
+        'bash scripts/capture_asan_messages.sh; exec bash'  # Run script and keep terminal open
+    ]
+
+    # Launch the terminal with the command
+    return subprocess.Popen(terminal_command)
+
+
+def kill_process(pid):
+    """
+    Terminate a process with the given PID.
+    """
+    try:
+        process = psutil.Process(pid)
+        process.terminate()  # Terminate the process gracefully
+        process.wait()  # Wait for the process to terminate
+        print(f"Process {pid} terminated gracefully.")
+    except psutil.NoSuchProcess:
+        print(f"No such process with PID {pid}.")
+    except psutil.AccessDenied:
+        print(f"Permission denied to terminate process with PID {pid}.")
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+def read_pid_from_file(pid_file):
+    """
+    Read the PID from the given file.
+    :param pid_file: Path to the file containing the PID.
+    :return: The PID read from the file.
+    """
+    try:
+        with open(pid_file, 'r') as file:
+            pid = int(file.read().strip())
+        return pid
+    except FileNotFoundError:
+        print(f"PID file {pid_file} not found.")
+        return None
+    except ValueError:
+        print(f"Invalid PID value in {pid_file}.")
+        return None
 
 
 def monitor_broker(broker_process):
@@ -58,5 +117,8 @@ if __name__ == '__main__':
         session.fuzz()
     except KeyboardInterrupt:
         print("KeyboardInterrupt received. Shutting down and terminating procs...")
-        broker_proc.terminate()
+        pid = read_pid_from_file('pid_file.txt')
+        if pid:
+            kill_process(pid)
+            #TODO: Remove the pid file
         exit(0)
