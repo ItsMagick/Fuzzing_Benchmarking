@@ -17,6 +17,9 @@ start_mosquitto() {
 
 stop_mosquitto() {
     kill $MOSQUITTO_PID
+    while ps -p $MOSQUITTO_PID > /dev/null; do
+        sleep 1
+    done
 }
 
 > $LOG_FILE
@@ -26,8 +29,11 @@ for testcase in $TESTCASE_DIR/*; do
     start_mosquitto
     $AFLNET_REPLAY_BINARY "$testcase" MQTT $MOSQUITTO_PORT 2>> $LOG_FILE
     stop_mosquitto
+    echo "Waiting for system resources to be freed..."
+    sleep 5  # Additional sleep to ensure port resources are freed
 
-    echo "Testcase completed: $testcase" | tee -a $LOG_FILE
+
+    echo -e "Testcase completed: $testcase" | tee -a $LOG_FILE
     echo "---------------------------------" | tee -a $LOG_FILE
 done
 

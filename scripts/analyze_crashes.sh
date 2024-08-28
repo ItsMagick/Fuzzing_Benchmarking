@@ -4,17 +4,14 @@ set -ex
 MOSQUITTO_BINARY="binaries/mosquitto"
 AFLNET_REPLAY_BINARY="binaries/aflnet-replay"
 TESTCASE_DIR="out2/preload/replayable-crashes"
-LOG_FILE="aflnet_crashes.log"
 MOSQUITTO_PORT=1885
 GDB_SCRIPT="gdb_commands.txt"
 
 echo "set pagination off" > $GDB_SCRIPT
 echo "run -p $MOSQUITTO_PORT" >> $GDB_SCRIPT
 
-> $LOG_FILE
-
 for testcase in $TESTCASE_DIR/*; do
-    echo "Running testcase: $testcase" | tee -a $LOG_FILE
+    echo "Running testcase: $testcase"
     gnome-terminal -- bash -c "gdb -q $MOSQUITTO_BINARY -x $GDB_SCRIPT; exec bash"
     $AFLNET_REPLAY_BINARY "$testcase" MQTT $MOSQUITTO_PORT
 
