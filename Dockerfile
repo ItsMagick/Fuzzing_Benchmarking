@@ -79,3 +79,4 @@ COPY --from=mosquitto /opt/aflnet/afl-fuzz afl-fuzz
 COPY --from=mosquitto /opt/aflnet/afl-showmap afl-showmap
 COPY --from=mosquitto /opt/aflnet/afl-plot afl-plot
 COPY --from=mosquitto /opt/aflnet/afl-tmin afl-tmin
+COPY --from=mosquitto /opt/aflnet/aflnet-replay aflnet-replay
