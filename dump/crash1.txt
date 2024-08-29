@@ -1,0 +1,22 @@
+#0  __memcmp_avx2_movbe ()
+    at ../sysdeps/x86_64/multiarch/memcmp-avx2-movbe.S:414
+#1  0x00000000004372ff in MemcmpInterceptorCommon ()
+    at /home/nnelson/Documents/llvm-project/llvm/utils/release/final/llvm-project/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:862
+#2  0x00000000004376db in bcmp ()
+    at /home/nnelson/Documents/llvm-project/llvm/utils/release/final/llvm-project/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:887
+#3  0x0000000000518eb0 in handle__publish (context=0x616000000080)
+    at handle_publish.c:311
+#4  0x000000000055adca in handle__packet (context=0x616000000080)
+    at read_handle.c:55
+#5  0x00000000005353fe in packet__read (mosq=<optimized out>)
+    at ../lib/packet_mosq.c:566
+#6  0x0000000000528657 in loop_handle_reads_writes () at mux_poll.c:335
+#7  mux_poll__handle (listensock=<optimized out>,
+    listensock_count=<optimized out>) at mux_poll.c:224
+#8  0x0000000000526f0e in mux__handle (listensock=0x0,
+    listensock@entry=0x6030000000d0, listensock_count=0,
+    listensock_count@entry=2) at mux.c:78
+#9  0x000000000052405b in mosquitto_main_loop (listensock=<optimized out>,
+    listensock_count=<optimized out>) at loop.c:206
+#10 0x00000000004cc4b6 in main (argc=<optimized out>, argv=<optimized out>)
+    at mosquitto.c:576

@@ -14,9 +14,12 @@ binaries/*
 out2
 venv
 aflnet_in
-dump/*.img
+dump/*.png
 mqtt_aflnet_stdout.log
 *.so
 __pycache__
 boo-fuzzer-mqtt/boofuzz-results
 *.log
+pid_file.txt
+gdb_commands.txt
+mosquitto_ready.signal

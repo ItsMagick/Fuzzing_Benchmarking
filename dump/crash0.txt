@@ -1,0 +1,63 @@
+#0  __memcpy_avx_unaligned_erms ()
+    at ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:339
+#1  0x0000000000499b62 in __asan_memcpy ()
+    at /home/nnelson/Documents/llvm-project/llvm/utils/release/final/llvm-project/compiler-rt/lib/asan/asan_interceptors_memintrinsics.cpp:22
+#2  0x00000000005301e6 in packet__write_bytes (packet=<optimized out>,
+    bytes=bytes@entry=0x0, count=5) at ../lib/packet_datatypes.c:88
+#3  0x000000000058052f in send__real_publish (mosq=<optimized out>,
+    mid=<optimized out>, topic=<optimized out>, payloadlen=<optimized out>,
+    payload=<optimized out>, qos=<optimized out>, retain=<optimized out>,
+    dup=<optimized out>, cmsg_props=0x0, store_props=0x0, expiry_interval=0)
+    at ../lib/send_publish.c:217
+#4  0x000000000057f543 in send__publish (mosq=<optimized out>,
+    mid=<optimized out>, topic=0x602000001b90 "test",
+    payloadlen=<optimized out>, payload=<optimized out>, qos=<optimized out>,
+    retain=false, dup=<optimized out>, cmsg_props=<optimized out>,
+    store_props=<optimized out>, expiry_interval=<optimized out>)
+    at ../lib/send_publish.c:133
+#5  0x0000000000509364 in db__message_write_inflight_out_single (
+    context=context@entry=0x616000000080, msg=0x606000001880) at database.c:1117
+#6  0x0000000000500f89 in db__message_write_inflight_out_latest (
+    context=context@entry=0x616000000080) at database.c:1205
+#7  0x0000000000502b25 in db__message_insert (context=<optimized out>,
+    mid=<optimized out>, dir=<optimized out>, qos=<optimized out>,
+    retain=false, stored=<optimized out>, properties=<optimized out>,
+    update=<optimized out>) at database.c:621
+#8  0x000000000059b003 in subs__send (leaf=<optimized out>,
+    topic=<optimized out>, qos=<optimized out>, retain=<optimized out>,
+    stored=<optimized out>) at subs.c:100
+#9  0x000000000059a6ee in subs__process (hier=<optimized out>,
+    hier@entry=0x60b0000028d0,
+    source_id=source_id@entry=0x602000001830 "aflnet_longid",
+    topic=topic@entry=0x602000001b90 "test", qos=qos@entry=0 '\000',
+    retain=retain@entry=0, stored=stored@entry=0x60b0000028d0) at subs.c:143
+#10 0x0000000000596962 in sub__search (subhier=<optimized out>,
+    subhier@entry=0x60b000002610,
+    split_topics=split_topics@entry=0x603000000a38,
+    source_id=source_id@entry=0x602000001830 "aflnet_longid",
+    topic=topic@entry=0x602000001b90 "test", qos=qos@entry=0 '\000',
+    retain=retain@entry=0, stored=0x60b0000028d0) at subs.c:498
+#11 0x00000000005962a2 in sub__search (subhier=<optimized out>,
+    subhier@entry=0x60b0000000f0, split_topics=<optimized out>,
+    source_id=source_id@entry=0x602000001830 "aflnet_longid",
+    topic=topic@entry=0x602000001b90 "test", qos=qos@entry=0 '\000',
+    retain=4776, retain@entry=0, stored=0x60b0000028d0) at subs.c:491
+#12 0x0000000000594b40 in sub__messages_queue (source_id=<optimized out>,
+    topic=<optimized out>, qos=<optimized out>, retain=<optimized out>,
+    stored=<optimized out>) at subs.c:664
+#13 0x000000000051914f in handle__publish (context=0x616000000080)
+    at handle_publish.c:344
+#14 0x000000000055adca in handle__packet (context=0x616000000080)
+    at read_handle.c:55
+#15 0x00000000005353fe in packet__read (mosq=<optimized out>)
+    at ../lib/packet_mosq.c:566
+#16 0x0000000000528657 in loop_handle_reads_writes () at mux_poll.c:335
+#17 mux_poll__handle (listensock=<optimized out>,
+    listensock_count=<optimized out>) at mux_poll.c:224
+#18 0x0000000000526f0e in mux__handle (listensock=0x602000001c38,
+    listensock@entry=0x6030000000d0, listensock_count=0,
+    listensock_count@entry=2) at mux.c:78
+#19 0x000000000052405b in mosquitto_main_loop (listensock=<optimized out>,
+    listensock_count=<optimized out>) at loop.c:206
+#20 0x00000000004cc4b6 in main (argc=<optimized out>, argv=<optimized out>)
+    at mosquitto.c:576

@@ -1,0 +1,151 @@
+test case id:000000,sig:06,src:000094,op:havoc,rep:16 SIGSEGV because of the commented out sainity check in the function
+    handle_publish.c causes segfault in function lib/packet__read_byte.c line 88 memcpy(&(packet->payload[packet->pos]), bytes, count);
+test case id:000001,sig:06,src:000094+000090,op:splice,rep:8 SIGSEGV same thing as above
+test case id:000002,sig:06,src:000121,op:havoc,rep:8 SIGSEGV same thing as above
+test case id:000003,sig:06,src:000121,op:havoc,rep:4 SIGSEGV out of bounds access because of invalid length of payload that
+    is stored in the mosquitto db structure causing the function  memcmp(cmsg_stored->store->payload, msg->payload, msg->payloadlen) )
+    in the function handle_publish.c in line 311 to access out of bounds memory
+test case id:000004,sig:06,src:000095,op:havoc,rep:2 same as id:000003
+test case id:id:000005,sig:06,src:000148,op:havoc,rep:2 same as id:000003
+test case id:000006,sig:06,src:000151,op:havoc,rep:32 same as id:000003
+test case id:000007,sig:06,src:000151+000173,op:splice,rep:4 same as id:000003
+test case id:000008,sig:06,src:000117,op:havoc,rep:4 same as id:000000
+test case id:000009,sig:06,src:000158,op:havoc,rep:64 same as id:000003
+test case id:000010,sig:06,src:000158+000074,op:splice,rep:64 same as id:000000
+test case id:000011,sig:06,src:000177+000184,op:splice,rep:4 same as id:000000
+test case id:000012,sig:06,src:000159+000109,op:splice,rep:32 same as id:000000
+test case id:000013,sig:06,src:000179,op:havoc,rep:2 same as id:000003
+test case id:000014,sig:06,src:000163+000119,op:splice,rep:16 same as id:000003
+test case id:000015,sig:06,src:000164+000190,op:splice,rep:4 same as id:000003
+test case id:000016,sig:06,src:000164+000190,op:splice,rep:4 same as id:000003
+test case id:000017,sig:06,src:000164+000161,op:splice,rep:8 same as id:000000
+test case id:000018,sig:06,src:000168,op:havoc,rep:32 same as id:000000
+test case id:000019,sig:06,src:000168,op:havoc,rep:128 same as id:000003
+test case id:000020,sig:06,src:000138,op:havoc,rep:128 same as id:000003
+test case id:000021,sig:06,src:000169,op:havoc,rep:2 same as id:000003
+test case id:000022,sig:06,src:000170,op:havoc,rep:32 same as id:000003
+test case id:000023,sig:06,src:000171,op:havoc,rep:4 same as id:000003
+test case id:000024,sig:06,src:000198,op:havoc,rep:2 same as id:000003
+test case id:000025,sig:06,src:000219,op:havoc,rep:4 same as id:000003
+test case id:000026,sig:06,src:000219,op:havoc,rep:4 same as id:000003
+test case id:000027,sig:06,src:000221,op:havoc,rep:32 same as id:000000
+test case id:000028,sig:06,src:000342+000334,op:splice,rep:8 same as id:000003
+test case id:000029,sig:06,src:000350+000024,op:splice,rep:32 same as id:000003
+test case id:000030,sig:06,src:000360,op:havoc,rep:2 same as id:000003
+test case id:000031,sig:06,src:000386,op:havoc,rep:128 same as id:000003
+test case id:000032,sig:06,src:000386,op:havoc,rep:4 same as id:000003
+test case id:000033,sig:06,src:000312,op:havoc,rep:128 same as id:000003
+test case id:000034,sig:06,src:000258,op:havoc,rep:16 same as id:000003
+test case id:000035,sig:06,src:000397,op:havoc,rep:4 same as id:000003
+test case id:000036,sig:06,src:000397,op:havoc,rep:4 same as id:000003
+test case id:000037,sig:06,src:000264,op:havoc,rep:8 same as id:000003
+test case id:000038,sig:06,src:000265,op:havoc,rep:32 same as id:000003
+test case id:000039,sig:06,src:000265+000136,op:splice,rep:64 same as id:000000
+test case id:000040,sig:06,src:000336,op:havoc,rep:64 same as id:000000
+test case id:000041,sig:06,src:000410+000027,op:splice,rep:128 same as id:000003
+test case id:000042,sig:06,src:000390,op:havoc,rep:4 same as id:000003
+test case id:000043,sig:06,src:000283,op:havoc,rep:4 same as id:000003
+test case id:000044,sig:06,src:000298+000100,op:splice,rep:128 same as id:000000
+test case id:000045,sig:06,src:000456,op:havoc,rep:8 same as id:000000
+test case id:000046,sig:06,src:000324,op:havoc,rep:32 same as id:000000 but with quos 1
+test case id:000047,sig:06,src:000421,op:havoc,rep:4 same as id:000003
+test case id:000048,sig:06,src:000439,op:havoc,rep:16 same as id:000003
+test case id:000049,sig:06,src:000439,op:havoc,rep:4 same as id:000000 without sub  (crash2.txt)
+test case id:000050,sig:06,src:000461,op:havoc,rep:2 same as id:000000
+test case id:000051,sig:06,src:000481,op:havoc,rep:128 same as id:000003
+test case id:000052,sig:06,src:000377,op:havoc,rep:4 same as id:000000
+test case id:000053,sig:06,src:000513+000520,op:splice,rep:32 same as id:000003
+test case id:000054,sig:06,src:000558,op:havoc,rep:8 same as id:000003
+test case id:000055,sig:06,src:000571,op:havoc,rep:8 same as id:000000
+test case id:000056,sig:06,src:000447,op:havoc,rep:4 same as id:000003
+test case id:000057,sig:06,src:000533,op:havoc,rep:2 same as id:000003
+test case id:000058,sig:06,src:000477,op:havoc,rep:4 same as id:000003
+test case id:000059,sig:06,src:000598,op:havoc,rep:16 same as id:000003
+test case id:000060,sig:06,src:000650,op:havoc,rep:4 same as id:000000 with sub and qos(crash3.txt)
+test case id:000061,sig:06,src:000650,op:havoc,rep:8 same as id:000003
+test case id:000062,sig:06,src:000542,op:havoc,rep:128 same as id:000003
+test case id:000063,sig:06,src:000622,op:havoc,rep:32 same as id:000000 with sub (crash3.txt)
+test case id:000064,sig:06,src:000666+000366,op:splice,rep:128 same as id:000003
+test case id:000065,sig:06,src:000672+000353,op:splice,rep:32 same as id:000003
+test case id:000066,sig:06,src:000690,op:havoc,rep:8 same as id:000000
+test case id:000067,sig:06,src:000744,op:havoc,rep:4 same as id:000003
+test case id:000068,sig:06,src:000744+000351,op:splice,rep:32 same as id:000003
+test case id:000069,sig:06,src:000747,op:havoc,rep:32 same as id:000003
+test case id:000070,sig:06,src:000765,op:havoc,rep:64 same as id:000003
+test case id:000071,sig:06,src:000682+000547,op:splice,rep:64 same as id:000003
+test case id:000072,sig:06,src:000757+000778,op:splice,rep:32 same as id:000000 without sub
+test case id:000073,sig:06,src:000805+000594,op:splice,rep:64 same as id:000000 without sub
+test case id:000074,sig:06,src:000817,op:havoc,rep:2 same as id:000003
+test case id:000075,sig:06,src:000854+000023,op:splice,rep:16 same as id:000000 without sub
+test case id:000076,sig:06,src:000857,op:havoc,rep:16 same as id:000003
+test case id:000077,sig:06,src:000791,op:havoc,rep:128 same as id:000003
+test case id:000078,sig:06,src:000791+000271,op:splice,rep:2 same as id:000003
+test case id:000079,sig:06,src:000868+000361,op:splice,rep:4 same as id:000003
+test case id:000080,sig:06,src:000877,op:havoc,rep:4 same as id:000003
+test case id:000081,sig:06,src:000897,op:havoc,rep:2 same as id:000003
+test case id:000082,sig:06,src:000900,op:havoc,rep:32 same as id:000000 quos 0
+test case id:000083,sig:06,src:000900,op:havoc,rep:2 same as id:000003
+test case id:000084,sig:06,src:000929,op:havoc,rep:8 same as id:000003
+test case id:000085,sig:06,src:000946,op:havoc,rep:128 same as id:000003
+test case id:000086,sig:06,src:000055+000225,op:splice,rep:32 same as id:000003
+test case id:000087,sig:06,src:000916,op:havoc,rep:16 same as id:000003
+test case id:000088,sig:06,src:000916,op:havoc,rep:128 same as id:000003
+test case id:000089,sig:06,src:000957,op:havoc,rep:2 same as id:000003
+test case id:000090,sig:06,src:000977+000543,op:splice,rep:128 same as id:000003
+test case id:000091,sig:06,src:000978,op:havoc,rep:64 same as id:000003
+test case id:000092,sig:06,src:000974,op:havoc,rep:4 same as id:000003
+test case id:000093,sig:06,src:000994+000158,op:splice,rep:32 same as id:000003
+test case id:000094,sig:06,src:000978,op:havoc,rep:2 same as id:000003
+test case id:000095,sig:06,src:000966,op:havoc,rep:64 same as id:000000 without qos
+test case id:000096,sig:06,src:000966+000503,op:splice,rep:128 same as id:000003
+test case id:000097,sig:06,src:000966+000533,op:splice,rep:32 same as id:000000 without qos
+test case id:000098,sig:06,src:000648,op:havoc,rep:128 same as id:000003
+test case id:000099,sig:06,src:001019+000186,op:splice,rep:128 same as id:000003
+test case id:000100,sig:06,src:001049,op:havoc,rep:64 same as id:000003
+test case id:000101,sig:06,src:000928,op:havoc,rep:16 same as id:000003
+test case id:000102,sig:06,src:001072,op:havoc,rep:64 same as id:000003
+test case id:000103,sig:06,src:001072,op:havoc,rep:8 same as id:000003
+test case id:000104,sig:06,src:001058,op:havoc,rep:64 same as id:000003
+test case id:000105,sig:06,src:000967,op:havoc,rep:4 same as id:000003
+test case id:000106,sig:06,src:000967,op:havoc,rep:128 same as id:000000 quos 0
+test case id:000107,sig:06,src:001087,op:havoc,rep:8 same as id:000003
+test case id:000108,sig:06,src:001084+000031,op:splice,rep:32 same as id:000003
+test case id:000109,sig:06,src:000952+000289,op:splice,rep:4 same as id:000003
+test case id:000110,sig:06,src:001085,op:havoc,rep:2 same as id:000003
+test case id:000111,sig:06,src:001085,op:havoc,rep:128 same as id:000003
+test case id:000112,sig:06,src:001096,op:havoc,rep:128 same as id:000000 without qos
+test case id:000113,sig:06,src:001097,op:havoc,rep:8 same as id:000003
+test case id:000114,sig:06,src:001043,op:havoc,rep:64 same as id:000003
+test case id:000115,sig:06,src:000845,op:havoc,rep:128 same as id:000000 without qos
+test case id:000116,sig:06,src:001098,op:havoc,rep:2 same as id:000003
+test case id:000117,sig:06,src:001084+000327,op:splice,rep:32 same as id:000003
+test case id:000118,sig:06,src:001106,op:havoc,rep:4 same as id:000000 without qos
+test case id:000119,sig:06,src:001115+000339,op:splice,rep:32 same as id:000000 without qos
+test case id:000120,sig:06,src:000804+000366,op:splice,rep:64 same as id:000003
+test case id:000121,sig:06,src:001043+000783,op:splice,rep:128 same as id:000000 without qos
+test case id:000122,sig:06,src:001153,op:havoc,rep:128 same as id:000003
+test case id:000123,sig:06,src:001044+001058,op:splice,rep:16 same as id:000003
+test case id:000124,sig:06,src:001044+000839,op:splice,rep:32 same as id:000003
+test case id:000125,sig:06,src:001084,op:havoc,rep:16 same as id:000000 without qos
+test case id:000126,sig:06,src:001084+000505,op:splice,rep:128 same as id:000003
+test case id:000127,sig:06,src:001084+000964,op:splice,rep:16 same as id:000000 without qos
+test case id:000128,sig:06,src:001161+000179,op:splice,rep:128 same as id:000000 without qos
+test case id:000129,sig:06,src:001165,op:havoc,rep:32 same as id:000000 without qos
+test case id:000130,sig:06,src:001177,op:havoc,rep:128 same as id:000000 without qos
+test case id:000131,sig:06,src:001163+001020,op:splice,rep:32 same as id:000000 without qos
+test case id:000132,sig:06,src:001138+000371,op:splice,rep:8 same as id:000003
+test case id:000133,sig:06,src:001184,op:havoc,rep:128 same as id:000000 without qos
+test case id:000134,sig:06,src:000479+000397,op:splice,rep:16 same as id:000000 without qos
+test case id:000135,sig:06,src:001264,op:havoc,rep:64 same as id:000003
+test case id:000136,sig:06,src:000984+000760,op:splice,rep:16 same as id:000003
+test case id:000137,sig:06,src:001035+000858,op:splice,rep:8 same as id:000003
+test case id:000138,sig:06,src:001405+000275,op:splice,rep:128 same as id:000003
+test case id:000139,sig:06,src:001043,op:havoc,rep:2 same as id:000003
+test case id:000140,sig:06,src:000658,op:havoc,rep:8 same as id:000003
+test case id:000141,sig:06,src:001495,op:havoc,rep:2 same as id:000003
+test case id:000142,sig:06,src:001509,op:havoc,rep:2 same as id:000003
+test case id:000143,sig:06,src:001514,op:havoc,rep:2 same as id:000003
+test case id:000144,sig:06,src:001155,op:havoc,rep:8 same as id:000003
+test case id:000145,sig:06,src:001163,op:havoc,rep:32 same as id:000003
+test case id:000146,sig:06,src:001232+000353,op:splice,rep:32 same as id:000000 without qos
+test case id:000147,sig:06,src:001537,op:havoc,rep:4 same as id:000003
