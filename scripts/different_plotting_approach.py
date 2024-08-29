@@ -3,7 +3,6 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 from collections import defaultdict
 
-# Define patterns for faulty and successful connections
 faulty_patterns = [
     r'\[(.*?)\] .*: Client .* disconnected due to malformed packet.',
     r'\[(.*?)\] .*: Client .* disconnected due to protocol error.',
@@ -12,7 +11,6 @@ faulty_patterns = [
 successful_pattern = r'\[(.*?)\] .*: Reused message ID .* from .* detected\. Clearing from storage\.'
 
 
-# Function to extract connections from a log file
 def extract_connections(log_file_path):
     with open(log_file_path, 'r') as file:
         content = file.read()
@@ -20,14 +18,11 @@ def extract_connections(log_file_path):
     # Split the content into chunks
     chunks = re.split(r'mosquitto version 2.0.18 starting.', content)
 
-    # Store the timestamps and connection counts
     timestamp_counts = defaultdict(lambda: {'successful': 0, 'faulty': 0})
 
-    # Track counts over time
     last_timestamp = None
     running_counts = {'successful': 0, 'faulty': 0}
 
-    # Process each chunk
     for chunk in chunks:
         if chunk.strip() == "":
             continue
@@ -37,28 +32,23 @@ def extract_connections(log_file_path):
             if timestamp_match:
                 timestamp = timestamp_match.group(1)
                 if last_timestamp is not None and timestamp != last_timestamp:
-                    # Add previous timestamp counts to the dictionary
                     timestamp_counts[last_timestamp] = running_counts.copy()
 
-                # Check for faulty connections
                 for pattern in faulty_patterns:
                     if re.search(pattern, line):
                         running_counts['faulty'] += 1
                         break
 
-                    # Check for successful connections
                     else:
                         running_counts['successful'] += 1
                 last_timestamp = timestamp
 
-    # Add the last timestamp's counts
     if last_timestamp:
         timestamp_counts[last_timestamp] = running_counts
 
     return timestamp_counts
 
 
-# Convert timestamp to datetime object
 def parse_timestamp(timestamp_str):
     return datetime.strptime(timestamp_str, '%Y-%m-%d %H:%M:%S')
 

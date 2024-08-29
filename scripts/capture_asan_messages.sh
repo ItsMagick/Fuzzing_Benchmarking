@@ -12,25 +12,20 @@ timestamped_output() {
     done
 }
 
-# Function to start the application
 start_application() {
-    # Start the application and redirect stdout and stderr to a log file
     ($PROCESS_NAME 2>&1 | timestamped_output | tee "$APPLICATION_OUTPUT") &
-    echo $! > pid_file.txt  # Save the PID of the application
+    echo $! > pid_file.txt
 }
 
 > "$READY_FILE"
 
-# Start the application for the first time
 start_application
 
 echo "READY" > "$READY_FILE"
 
 while true; do
-    # Read the PID of the application from the file
     PID=$(cat pid_file.txt)
 
-    # Check if the process is running
     if ps -f "$PID" > /dev/null; then
         echo "$(date +"[%Y-%m-%d %H:%M:%S]") - $PROCESS_NAME is running with PID $PID" >> "$LOG_FILE"
     else
@@ -39,7 +34,7 @@ while true; do
         cat "$APPLICATION_OUTPUT" >> "$CRASH_LOG"
         echo "" >> "$CRASH_LOG"  # Add a newline for readability
         break
-        # Optionally, restart the application
+        # Optionally,  the application
     fi
 done
 
