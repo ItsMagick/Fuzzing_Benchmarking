@@ -39,4 +39,3 @@ done
 
 echo "All test cases have been executed. Crashes (if any) have been logged to $LOG_FILE."
 tar -czvf aflnet_crashes.tar.gz $LOG_FILE
-git add aflnet_crashes.tar.gz

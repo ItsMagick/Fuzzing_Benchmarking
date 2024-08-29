@@ -14,7 +14,7 @@ binaries/*
 out2
 venv
 aflnet_in
-dump
+dump/*.img
 mqtt_aflnet_stdout.log
 *.so
 __pycache__
