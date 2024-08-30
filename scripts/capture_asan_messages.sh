@@ -1,9 +1,9 @@
 #!/bin/bash
 
 PROCESS_NAME="./binaries/mosquitto"
-LOG_FILE="process_monitor.log"
-CRASH_LOG="process_crash.log"
-APPLICATION_OUTPUT="application_output.log"
+LOG_FILE="process_monitor_efficient.log"
+CRASH_LOG="process_crash_efficient.log"
+APPLICATION_OUTPUT="mqtt_boofuzz_stdout_efficient.log"
 READY_FILE="mosquitto_ready.signal"
 
 timestamped_output() {

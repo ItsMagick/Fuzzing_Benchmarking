@@ -120,5 +120,4 @@ if __name__ == '__main__':
         pid = read_pid_from_file('pid_file.txt')
         if pid:
             kill_process(pid)
-            #TODO: Remove the pid file
         exit(0)

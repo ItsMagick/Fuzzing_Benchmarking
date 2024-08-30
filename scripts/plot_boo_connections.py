@@ -2,62 +2,94 @@ import re
 import matplotlib.pyplot as plt
 from datetime import datetime
 
-# Define the log file path
-logfile_path = "mqtt_boofuzz_stdout.log"
+from matplotlib.ticker import MaxNLocator
 
-# Initialize lists to store the timestamps of successful and failed connections
-failed_timestamps = []
-successful_timestamps = []
 
-# Define regex patterns for successful and failed connections
+new_connection_pattern = r'\[(.*?)\] \d+: New connection from \d+\.\d+\.\d+\.\d+:\d+ on port 1883\.'
 success_pattern = re.compile(r'\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\] \d+: New client connected from .* as .*')
-failure_pattern = re.compile(r'\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\] \d+: Client .* disconnected due to protocol error\.')
 
-# Open and read the log file
-with open(logfile_path, "r") as logfile:
-    for line in logfile:
-        # Check for successful connections
-        success_match = success_pattern.search(line)
-        if success_match:
-            timestamp_str = success_match.group(1)
-            timestamp = datetime.strptime(timestamp_str, '%Y-%m-%d %H:%M:%S')
-            successful_timestamps.append(timestamp)
 
-        # Check for failed connections
-        failure_match = failure_pattern.search(line)
-        if failure_match:
-            timestamp_str = failure_match.group(1)
-            timestamp = datetime.strptime(timestamp_str, '%Y-%m-%d %H:%M:%S')
-            failed_timestamps.append(timestamp)
+def extract_connections(log_file_path):
+    with open(log_file_path, "r", encoding="latin-1") as logfile:
+        content = logfile.read()
+    chunks = re.split(new_connection_pattern, content)
+    timestamp_cumulative_success = {}
+    timestamp_cumulative_unsuccessful = {}
+    cumulative_success = 0
+    cumulative_unsuccessful = 0
+    for chunk in chunks:
+        if chunk.strip() == "":
+            continue
+        timestamp_match = re.search(r'\[(.*?)\]', chunk)
+        if timestamp_match:
+            chunk_start_time = timestamp_match.group(1)
+            successful_messages = re.findall(success_pattern, chunk)
+            new_successes = len(successful_messages)
+            if new_successes > 0:
+                cumulative_success += new_successes
+                timestamp_cumulative_success[chunk_start_time] = cumulative_success
+                timestamp_cumulative_unsuccessful[chunk_start_time] = cumulative_unsuccessful
+            else:
+                cumulative_unsuccessful += 1
+                timestamp_cumulative_success[chunk_start_time] = cumulative_success
+                timestamp_cumulative_unsuccessful[chunk_start_time] = cumulative_unsuccessful
 
-# Sort the timestamps
-successful_timestamps.sort()
-failed_timestamps.sort()
+    total_connections = cumulative_success + cumulative_unsuccessful
+    return (timestamp_cumulative_success, timestamp_cumulative_unsuccessful, total_connections, cumulative_success,
+            cumulative_unsuccessful)
 
-# Combine timestamps for plotting
-all_timestamps = sorted(set(successful_timestamps + failed_timestamps))
 
-# Calculate cumulative totals
-cumulative_successful = []
-cumulative_failed = []
-success_count = 0
-fail_count = 0
+def parse_timestamp(timestamp_str):
+    return datetime.strptime(timestamp_str, '%Y-%m-%d %H:%M:%S')
 
-for timestamp in all_timestamps:
-    success_count += successful_timestamps.count(timestamp)
-    fail_count += failed_timestamps.count(timestamp)
-    cumulative_successful.append(success_count)
-    cumulative_failed.append(fail_count)
 
-# Plot the results
-plt.figure(figsize=(10, 6))
-plt.plot(all_timestamps, cumulative_failed, marker='o', color='red', linestyle='-', label='Cumulative Failed Connections')
-plt.plot(all_timestamps, cumulative_successful, marker='o', color='green', linestyle='-', label='Cumulative Successful Connections')
-plt.title('Evaluation of Connection success rate over time (boofuzz)')
-plt.xlabel('Timestamp')
-plt.ylabel('Number of Connections')
-plt.xticks(rotation=45)
-plt.legend()
-plt.grid(True)
-plt.tight_layout()
-plt.show()
+def plot_connections(cumulative_success, cumulative_unsuccessful, total_connections, successful_connections,
+                     unsuccessful_connections):
+    timestamps_success = sorted(cumulative_success.keys())
+    success_counts = [cumulative_success[t] for t in timestamps_success]
+
+    timestamps_unsuccessful = sorted(cumulative_unsuccessful.keys())
+    unsuccessful_counts = [cumulative_unsuccessful[t] for t in timestamps_unsuccessful]
+
+    times_success = [parse_timestamp(t) for t in timestamps_success]
+    times_unsuccessful = [parse_timestamp(t) for t in timestamps_unsuccessful]
+
+    fig, ax = plt.subplots(figsize=(14, 7))
+
+    ax.plot(times_success, success_counts, marker='o', color='g', linestyle='-',
+            label='Cumulative Successful Connections')
+    ax.plot(times_unsuccessful, unsuccessful_counts, marker='x', color='r', linestyle='--',
+            label='Cumulative Unsuccessful Connections')
+
+    ax.set_xlabel('Timestamp')
+    ax.set_ylabel('Number of Connections')
+    ax.set_title('Evaluation of Connection success rate over time (boofuzz)')
+    ax.legend()
+    ax.grid(True)
+
+    ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d %H:%M:%S'))
+    ax.xaxis.set_major_locator(plt.matplotlib.dates.AutoDateLocator())
+    plt.gcf().autofmt_xdate()
+
+    ax.yaxis.set_major_locator(MaxNLocator(integer=True))
+    plt.ticklabel_format(style='plain', axis='y')
+
+    fig.text(0.5, 0.05,
+             f"Total Connections: {total_connections}; "
+             f"Successful Connections: {successful_connections}; "
+             f"Unsuccessful Connections: {unsuccessful_connections}"
+             , fontsize=12, ha='center', va='center', bbox=dict(facecolor='white', alpha=0.8, edgecolor='black'),
+             transform=fig.transFigure)
+
+    plt.subplots_adjust(bottom=0.3)
+    plt.show()
+    plt.savefig('plots/connection_evaluation_boofuzz.png', bbox_inches='tight')
+    plt.close(fig)
+
+
+log_file_path = 'mqtt_boofuzz_stdout.log'
+
+cumulative_success, cumulative_unsuccessful, total_connections, successful_connections, unsuccessful_connections \
+    = extract_connections(log_file_path)
+plot_connections(cumulative_success, cumulative_unsuccessful, total_connections, successful_connections,
+                 unsuccessful_connections)

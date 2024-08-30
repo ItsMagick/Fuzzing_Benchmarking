@@ -23,5 +23,5 @@ boo-fuzzer-mqtt/boofuzz-results
 pid_file.txt
 gdb_commands.txt
 mosquitto_ready.signal
-boofuzz-results
+boofuzz-results_normal
 boo-fuzzer-mqtt-efficient/boofuzz-results
