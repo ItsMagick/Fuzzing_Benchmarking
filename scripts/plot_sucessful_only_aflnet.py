@@ -70,7 +70,7 @@ def plot_connections(cumulative_success, cumulative_unsuccessful, total_connecti
 
     ax.set_xlabel('Timestamp')
     ax.set_ylabel('Number of Connections')
-    ax.set_title('Evaluation of Connection success rate over time')
+    ax.set_title('Evaluation of Connection success rate over time (AFLNet)')
     ax.legend()
     ax.grid(True)
 

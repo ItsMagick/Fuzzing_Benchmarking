@@ -1,0 +1,19 @@
+// Mosquitto MQTT Broker State Machine
+digraph {
+	Start
+	Initialization
+	Listening
+	Processing
+	Publishing
+	Subscribing
+	Terminating
+	Stopped
+	Start -> Initialization [label="Start MQTT Broker"]
+	Initialization -> Listening [label="Initialize Network Interface"]
+	Listening -> Processing [label="Receive MQTT Message"]
+	Processing -> Publishing [label="Publish Message"]
+	Processing -> Subscribing [label="Subscribe to Topic"]
+	Processing -> Listening [label=Idle]
+	Listening -> Terminating [label="Shutdown Request"]
+	Terminating -> Stopped [label="Cleanup Resources"]
+}
