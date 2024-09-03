@@ -83,11 +83,11 @@ def plot_connections(cumulative_success, cumulative_unsuccessful, total_connecti
 
     plt.subplots_adjust(bottom=0.3)
     plt.show()
-    plt.savefig('plots/connection_evaluation_boofuzz.png', bbox_inches='tight')
+    plt.savefig('plots/connection_evaluation_boofuzz_efficient.png', bbox_inches='tight')
     plt.close(fig)
 
 
-log_file_path = 'mqtt_boofuzz_stdout.log'
+log_file_path = 'mqtt_boofuzz_stdout_efficient.log'
 
 cumulative_success, cumulative_unsuccessful, total_connections, successful_connections, unsuccessful_connections \
     = extract_connections(log_file_path)
